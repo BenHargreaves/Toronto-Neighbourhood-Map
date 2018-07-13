@@ -32,7 +32,7 @@ var viewModels = {
             // and it visible in the view.
             self.markers = ko.observableArray();
             self.filteredMarkers = ko.observableArray();
-            self.filterString = ko.observable();
+            self.filterString = ko.observable('');
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 43.6463, lng: -79.3989 },
                 zoom: 13
@@ -45,23 +45,43 @@ var viewModels = {
                         map: map,
                         title: model.locations[i].title
                     });
+
+                    marker.infoWindow = new google.maps.InfoWindow({
+                        content: 'BOI'
+                    });
+
+                    google.maps.event.addListener(marker, 'click', function() {
+                        marker.infoWindow.open(map, this);
+                    });
+
                     self.markers.push(marker);
                 };
-                // initialie the 'filtered array' which is displayed in view
+                // initialize the 'filtered array' which is displayed in view
                 self.filteredMarkers(self.markers.slice(0));
             }
 
             this.filterSearch = function(){
                 self.filteredMarkers.removeAll();
                 for( var i = 0; i < self.markers().length; i++){
-                    if (self.markers()[i].title.match(self.filterString())){
+                    if (self.markers()[i].title.toUpperCase().match(self.filterString().toUpperCase())){
                         self.filteredMarkers.push(self.markers()[i])
-                    } 
+                        //This line was added to overcome a 'blank search' 
+                        //not repopulating lost markers from a previous search
+                        self.markers()[i].setMap(map);
+                    } else {
+                        self.markers()[i].setMap(null);
+                    }
                 }
+
             }
 
             this.resetSearch = function() {
                 self.filteredMarkers(self.markers.slice(0));
+                self.filterString('');
+                //Reset marker visibility on Map
+                for (var i = 0; i < self.markers().length; i++) {
+                   self.markers()[i].setMap(map);
+                }
             }
 
             //Initialize Markers automatically from Maps API callback - which only calls mapInit

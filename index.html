@@ -25,7 +25,7 @@
     <div class="d-flex flex-row bg-dark">
         <div class="flex-column sidebar" id='collapsing-sidebar'>
             <form data-bind="submit: filterSearch" class="input-group sidebar-search bg-dark">
-                <input data-bind="value: filterString" type="text" class="form-control" placeholder="Filter list" >
+                <input id='searchInput' data-bind="value: filterString" type="text" class="form-control" placeholder="Filter list" >
                 <div class="input-group-append">
                         <button data-bind="click: resetSearch"class="btn bg-light fa fa-times-circle" type="button"></button>
                         <button class="btn btn-primary fa fa-th-list" type="submit"></button>
