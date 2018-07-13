@@ -1,0 +1,61 @@
+#map {
+    height: calc(100vh - 64px);
+    width: 100%;
+  }
+
+html, body {
+height: 100%;
+width: 100%;
+margin: 0;
+padding: 0;
+}
+
+.sidebar {
+    height: 70%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 10px;
+    margin: 120px 0px;
+    /*background: #fff;*/
+    background: #343a40;
+    color: #fff;
+    border-radius: 3px;
+}
+
+.sidebar a:hover {
+    background-color: #90A4AE;
+    cursor: pointer;
+}
+
+.sidebar-search {
+    position: sticky;
+    top: 0px;
+    padding: 5px;
+}
+
+.navbar {
+    z-index: 2;
+}
+
+/* custom scrollbar tutorial from csstricks.com*/
+.sidebar::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+.sidebar::-webkit-scrollbar-track {
+    -webkit-box-shadow: none 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+  border-radius: 3px;
+}
+
+
+
