@@ -47,10 +47,11 @@ var viewModels = {
                     });
 
                     marker.infoWindow = new google.maps.InfoWindow({
-                        content: 'BOI'
+                        content: 'Loading...'
                     });
 
                     google.maps.event.addListener(marker, 'click', function() {
+                        marker.infoWindow.setContent(this.title);
                         marker.infoWindow.open(map, this);
                     });
 
