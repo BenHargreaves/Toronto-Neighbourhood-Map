@@ -49,7 +49,6 @@ var viewModels = {
                     marker.infoWindow = new google.maps.InfoWindow({
                         content: 'Loading...'
                     });
-
                     google.maps.event.addListener(marker, 'click', function() {
                         marker.infoWindow.setContent(this.title);
                         marker.infoWindow.open(map, this);
@@ -100,23 +99,30 @@ var viewModels = {
         }
     },
     pullPics: function(data){
-        var searchParam = data.title.replace(/ /g, '+');
-        searchParam = searchParam + '+Toronto';
-
-        var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=e2fc11428743df60333c153c2cdd4245&text="' + searchParam + '"&sort=relevance&safe_search=1&per_page=5&extras=url_m'
-       
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            var xmlDoc = this.responseXML;
-            var x = xmlDoc.getElementsByTagName("photo");
-            for (var i = 0; i < x.length; i++){
-                console.log(x[i].attributes.url_m.value);
-            }
-          }
-        };
-        xhttp.open("GET", url, true);
-        xhttp.send();
+        //If pics already retreived from Flickr, dont call API again
+        // else - call api and load pics for this location (marker)
+        if(data.pics){
+            console.log(data)
+        } else {
+            data.pics = [];
+            var searchParam = data.title.replace(/ /g, '+');
+            searchParam = searchParam + '+Toronto';
+    
+            var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=e2fc11428743df60333c153c2cdd4245&text="' + searchParam + '"&sort=relevance&safe_search=1&per_page=5&extras=url_m'
+           
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                var xmlDoc = this.responseXML;
+                var x = xmlDoc.getElementsByTagName("photo");
+                for (var i = 0; i < x.length; i++){
+                    data.pics.push(x[i].attributes.url_m.value);
+                }
+              }
+            };
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
 
     }
 }
