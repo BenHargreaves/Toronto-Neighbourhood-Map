@@ -22,8 +22,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     </nav>
-    <div class="d-flex flex-row bg-dark">
-        <div class="flex-column sidebar" id='collapsing-sidebar'>
+    <div class="d-flex flex-row">
+        <div class="flex-column bg-dark sidebar" id='collapsing-sidebar'>
             <form data-bind="submit: filterSearch" class="input-group sidebar-search bg-dark">
                 <input id='searchInput' data-bind="value: filterString" type="text" class="form-control" placeholder="Filter list" >
                 <div class="input-group-append">
@@ -31,11 +31,13 @@
                         <button class="btn btn-primary fa fa-th-list" type="submit"></button>
                 </div>
             </form>
-            <nav data-bind='foreach: filteredMarkers'>
-                <a class="nav-link" data-bind="text: title, click: viewModels.pullPics"></a>
+            <nav data-bind='foreach: markers'>
+                <div data-bind="visible: $data.listVisibility">
+                    <a class="nav-link" data-bind="text: title, click: viewModels.pullPics"></a>
+                </div>
             </nav>
         </div>
-        <div id="map" class="flex-column"></div>
+        <div id="map" class="flex-column"><h1 class='text-center'>LOADING....</h1></div>
     </div>
 
     <!-- KnockoutJS script-->
