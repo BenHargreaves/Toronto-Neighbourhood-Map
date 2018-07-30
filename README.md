@@ -1,5 +1,5 @@
 # Toronto-Neighbourhood-Map
-A Map of some cool locations in Toronto using Google Maps / Geocoding, and Flickr API's. Completed as part of Udacities Full Stack nanodegree
+A Map of some cool locations in Toronto using Google Maps / Geocoding, and Flickr API's. Completed as part of Udacity's Full Stack nanodegree
 
 ## Dependencies
 Code & Libraries:
