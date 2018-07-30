@@ -139,26 +139,29 @@ var viewModels = {
             var urlGeocode = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+ data.position.lat() +',' + data.position.lng() + '&key=AIzaSyBuvd9Jw5sMWtHH13t-dP2TbdqZGaT8a3M'
             // Call to Google maps Geocode API - LatLng to Address
             $.ajax({url: urlGeocode})
-            .done(function(result){
-                data.infoText += '<p>' + result.results[0].formatted_address +'</p>'
-            })
-            .fail(function(){
-                data.infoText = '<p>Call to Google Geocoding API failed.<br />Please check network settings.</p>'
+                .done(function(result){
+                    data.infoText += '<p>' + result.results[0].formatted_address +'</p>'
+                })
+                .fail(function(){
+                    data.infoText = '<p>Call to Google Geocoding API failed.<br />Please check network settings.</p>'
                 })
 
+            // replace spaces with '+' for URL formatting
             var searchParam = data.title.replace(/ /g, '+');
             searchParam = searchParam + '+Toronto';
 
             var urlFlickr = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=e2fc11428743df60333c153c2cdd4245&text="' + searchParam + '"&sort=relevance&safe_search=1&per_page=5&extras=url_m'
-            // Call to Flickr Api - Pulls pics of location. The results are a bit of a mixed bag...
+            // Call to Flickr Photo Search Api - Pulls pics of location. The results are a bit of a mixed bag...
             $.ajax({url: urlFlickr})
                 .done(function(result){
                     var x = result.getElementsByTagName("photo");
                     data.infoText += '<div class="d-flex flex-row" style="overflow-x: auto;">'
                     
+                    // Extracts small image URL's from successful response
                     for (var i = 0; i < x.length; i++) {
                         data.pics.push(x[i].attributes.url_m.value);
                     }
+                    // adds the URL's to image elements for display in the infoWindow of that marker
                     for (var i=0; i < data.pics.length; i++){
                         data.infoText += '<img class="p-1" style="height: 100px;" src="' + data.pics[i] + '" alt="Image">';
                     }
