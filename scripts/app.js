@@ -116,6 +116,10 @@ var viewModels = {
         }
         ko.applyBindings(new mapViewModel());
     },
+
+    maploadError: function(){
+        alert('Google Maps API failed to load. Please check Console for full error');
+    },
     // For hiding / showing hamburger menu. does not need binding
     toggleNav: function () {
         var sidebar = document.getElementById("collapsing-sidebar");
@@ -144,7 +148,7 @@ var viewModels = {
                 })
                 .fail(function(){
                     data.infoText = '<p>Call to Google Geocoding API failed.<br />Please check network settings.</p>'
-                })
+                });
 
             // replace spaces with '+' for URL formatting
             var searchParam = data.title.replace(/ /g, '+');
@@ -171,7 +175,7 @@ var viewModels = {
                 })
                 .always(function(){
                     data.infoText += '</div></div>';
-                })
+                });
         }
 
     }
